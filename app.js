@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
+const helmet = require('helmet');
 
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
@@ -51,6 +52,8 @@ app.use((req, res, next) => {
 app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
 
+app.use(helmet());
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -60,10 +63,10 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-.connect(
-  'mongodb+srv://sagar48:mongodb48@crud-cluster-xgwne.mongodb.net/test?retryWrites=true&w=majority'
-)
-.then(result => {
-  app.listen(8080);
-})
-.catch(err => console.log(err));
+  .connect(
+    'mongodb+srv://sagar48:mongodb48@crud-cluster-xgwne.mongodb.net/test?retryWrites=true&w=majority'
+  )
+  .then(result => {
+    app.listen(8080);
+  })
+  .catch(err => console.log(err));
