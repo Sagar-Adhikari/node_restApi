@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const helmet = require('helmet');
 const compression = require('compression');
+const morgan = require('morgan');
 
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
@@ -55,6 +56,7 @@ app.use('/auth', authRoutes);
 
 app.use(helmet());
 app.use(compression());
+app.use(morgan('combined'));
 
 app.use((error, req, res, next) => {
   console.log(error);
